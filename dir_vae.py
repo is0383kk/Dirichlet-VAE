@@ -51,10 +51,11 @@ def prior(K, alpha):
     :return: mean and variance tensors
     """
     # ラプラス近似で正規分布に近似
+    # Approximate to normal distribution using Laplace approximation
     a = torch.Tensor(1, K).float().fill_(alpha) # 1 x 50 全て1.0
     mean = a.log().t() - a.log().mean(1)
     var = ((1 - 2.0 / K) * a.reciprocal()).t() + (1.0 / K ** 2) * a.reciprocal().sum(1)
-    return mean.t(), var.t() # これを事前分布に定義
+    return mean.t(), var.t() # Parameters of prior distribution after approximation
 
 class Dir_VAE(nn.Module):
     def __init__(self):
@@ -112,7 +113,7 @@ class Dir_VAE(nn.Module):
         self.relu = nn.ReLU()
 
         # Dir prior
-        self.prior_mean, self.prior_var = map(nn.Parameter, prior(args.category, 0.3)) # 0.3 is a hyper param 
+        self.prior_mean, self.prior_var = map(nn.Parameter, prior(args.category, 0.3)) # 0.3 is a hyper param of Dirichlet distribution
         self.prior_logvar = nn.Parameter(self.prior_var.log())
         self.prior_mean.requires_grad = False
         self.prior_var.requires_grad = False
