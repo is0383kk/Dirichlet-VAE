@@ -3,7 +3,9 @@ Example of Dirichlet-Variational Auto-Encoder (Dir-VAE)
 Dir-VAE is a VAE which using Dirichlet distribution  
 
 Dir-VAE implemented based on this paper  
-Autoencodeing Variational Inference for Topic Model:https://arxiv.org/pdf/1703.01488
+Autoencodeing Variational Inference for Topic Model:https://arxiv.org/pdf/1703.01488  
+In the original paper, Dir-VAE was proposed for document data.   
+This repository, on the other hand, modifies the network architecture of Dir-VAE so that it can be used for image data.  
 
 Reconstruction after 10 epochs of training(The top is the original image, the bottom is the reconstructed image):
 <div>
