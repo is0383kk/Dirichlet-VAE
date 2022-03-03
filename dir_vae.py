@@ -125,12 +125,12 @@ class Dir_VAE(nn.Module):
         h1 = self.fc1(conv.view(-1, 1024))
         return self.fc21(h1), self.fc22(h1)
 
-    def decode(self, z):
-        z = F.softmax(z,dim=1) 
+    def decode(self, gauss_z):
+        dir_z = F.softmax(gauss_z,dim=1) 
         # This variable (z) can be treated as a variable that follows a Dirichlet distribution (a variable that can be interpreted as a probability that the sum is 1)
         # Use the Softmax function to satisfy the simplex constraint
         # シンプレックス制約を満たすようにソフトマックス関数を使用
-        h3 = self.relu(self.fc3(z))
+        h3 = self.relu(self.fc3(dir_z))
         deconv_input = self.fc4(h3)
         deconv_input = deconv_input.view(-1,1024,1,1)
         return self.decoder(deconv_input)
@@ -143,10 +143,11 @@ class Dir_VAE(nn.Module):
 
     def forward(self, x):
         mu, logvar = self.encode(x)
-        z = self.reparameterize(mu, logvar) 
-        # This variable is a variable that follows a multivariate normal distribution
-        # Inputting this variable into softmax func yields a random variable that follows a Dirichlet distribution (Softmax func are used in decoder)
-        return self.decode(z), mu, logvar
+        gauss_z = self.reparameterize(mu, logvar) 
+        # gause_z is a variable that follows a multivariate normal distribution
+        # Inputting gause_z into softmax func yields a random variable that follows a Dirichlet distribution (Softmax func are used in decoder)
+        dir_z = F.softmax(gauss_z,dim=1) 
+        return self.decode(gauss_z), mu, logvar, gauss_z, dir_z
 
     # Reconstruction + KL divergence losses summed over all elements and batch
     def loss_function(self, recon_x, x, mu, logvar, K):
@@ -176,7 +177,7 @@ def train(epoch):
     for batch_idx, (data, _) in enumerate(train_loader):
         data = data.to(device)
         optimizer.zero_grad()
-        recon_batch, mu, logvar = model(data)
+        recon_batch, mu, logvar, gauss_z, dir_z = model(data)
         loss = model.loss_function(recon_batch, data, mu, logvar, args.category)
         loss = loss.mean()
         loss.backward()
@@ -197,7 +198,7 @@ def test(epoch):
     with torch.no_grad():
         for i, (data, _) in enumerate(test_loader):
             data = data.to(device)
-            recon_batch, mu, logvar = model(data)
+            recon_batch, mu, logvar, gauss_z, dir_z = model(data)
             loss = model.loss_function(recon_batch, data, mu, logvar, args.category)
             test_loss += loss.mean()
             test_loss.item()
