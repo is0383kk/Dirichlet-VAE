@@ -24,7 +24,7 @@ CUDA==10.1
 The following is the forward function of Dir-VAE.  
 Dir-VAE estimates variables that follow a Dirichlet distribution（dir_z） by inputting variables that follow a normal distribution（gauss_z） after Laplace approximation into a softmax function.  
 dir_z is a random variable whose sum is 1.
-```python:forward() in dir_vae.py
+```python:dir_vae.py
 def forward(self, x):
     mu, logvar = self.encode(x)
     gauss_z = self.reparameterize(mu, logvar) 
