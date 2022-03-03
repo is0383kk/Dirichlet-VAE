@@ -146,7 +146,7 @@ class Dir_VAE(nn.Module):
         gauss_z = self.reparameterize(mu, logvar) 
         # gause_z is a variable that follows a multivariate normal distribution
         # Inputting gause_z into softmax func yields a random variable that follows a Dirichlet distribution (Softmax func are used in decoder)
-        dir_z = F.softmax(gauss_z,dim=1) 
+        dir_z = F.softmax(gauss_z,dim=1) # This variable follows a Dirichlet distribution
         return self.decode(gauss_z), mu, logvar, gauss_z, dir_z
 
     # Reconstruction + KL divergence losses summed over all elements and batch
