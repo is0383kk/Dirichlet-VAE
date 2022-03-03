@@ -145,6 +145,7 @@ class Dir_VAE(nn.Module):
         mu, logvar = self.encode(x)
         z = self.reparameterize(mu, logvar) 
         # This variable is a variable that follows a multivariate normal distribution
+        # Inputting this variable into softmax func yields a random variable that follows a Dirichlet distribution (Softmax func are used in decoder)
         return self.decode(z), mu, logvar
 
     # Reconstruction + KL divergence losses summed over all elements and batch
