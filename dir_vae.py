@@ -52,7 +52,7 @@ def prior(K, alpha):
     """
     # ラプラス近似で正規分布に近似
     # Approximate to normal distribution using Laplace approximation
-    a = torch.Tensor(1, K).float().fill_(alpha) # 1 x 50 全て1.0
+    a = torch.Tensor(1, K).float().fill_(alpha)
     mean = a.log().t() - a.log().mean(1)
     var = ((1 - 2.0 / K) * a.reciprocal()).t() + (1.0 / K ** 2) * a.reciprocal().sum(1)
     return mean.t(), var.t() # Parameters of prior distribution after approximation
@@ -127,6 +127,7 @@ class Dir_VAE(nn.Module):
 
     def decode(self, z):
         z = F.softmax(z,dim=1) 
+        # This variable (z) can be treated as a variable that follows a Dirichlet distribution (a variable that can be interpreted as a probability that the sum is 1)
         # Use the Softmax function to satisfy the simplex constraint
         # シンプレックス制約を満たすようにソフトマックス関数を使用
         h3 = self.relu(self.fc3(z))
@@ -142,7 +143,8 @@ class Dir_VAE(nn.Module):
 
     def forward(self, x):
         mu, logvar = self.encode(x)
-        z = self.reparameterize(mu, logvar)
+        z = self.reparameterize(mu, logvar) 
+        # This variable is a variable that follows a multivariate normal distribution
         return self.decode(z), mu, logvar
 
     # Reconstruction + KL divergence losses summed over all elements and batch
