@@ -184,6 +184,8 @@ def train(epoch):
         train_loss += loss.item()
         optimizer.step()
         if batch_idx % args.log_interval == 0:
+            #print(f"gause_z:{gauss_z[0]}") # Variables following a normal distribution after Laplace approximation
+            #print(f"dir_z:{dir_z[0]},SUM:{torch.sum(dir_z[0])}") # Variables that follow a Dirichlet distribution. This is obtained by entering gauss_z into the softmax function
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                 epoch, batch_idx * len(data), len(train_loader.dataset),
                 100. * batch_idx / len(train_loader),
