@@ -20,6 +20,20 @@ CUDA==10.1
 
 [VAE Implementation Reference](https://github.com/pytorch/examples/blob/main/vae/main.py)  
 
+## About latent variables in Dir-VAE following a Dirichlet distribution  
+The following is the forward function of Dir-VAE.  
+Dir-VAE estimates variables that follow a Dirichlet distribution（dir_z） by inputting variables that follow a normal distribution（gauss_z） after Laplace approximation into a softmax function.  
+dir_z is a random variable whose sum is 1.
+```python:dir_vae.py
+    def forward(self, x):
+        mu, logvar = self.encode(x)
+        gauss_z = self.reparameterize(mu, logvar) 
+        # gause_z is a variable that follows a multivariate normal distribution
+        # Inputting gause_z into softmax func yields a random variable that follows a Dirichlet distribution (Softmax func are used in decoder)
+        dir_z = F.softmax(gauss_z,dim=1) # This variable follows a Dirichlet distribution
+        return self.decode(gauss_z), mu, logvar, gauss_z, dir_z
+```
+
 # Dirichlet Variational Auto-Encoder（日本語）
 本リポジトリはVAEの潜在変数を表現する確率分布にディリクレ分布を使用したディリクレVAEの実装例です  
 
