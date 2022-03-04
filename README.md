@@ -3,7 +3,7 @@ Example of Dirichlet-Variational Auto-Encoder (Dir-VAE) by PyTorch
 Dir-VAE is a VAE which using Dirichlet distribution  
 
 Dir-VAE implemented based on this paper  
-[Autoencodeing Variational Inference for Topic Model](https://arxiv.org/pdf/1703.01488)  
+[Autoencodeing Variational Inference for Topic Model](https://arxiv.org/pdf/1703.01488) which has been accepted to International Conference on Learning Representations 2017(ICLR2017)  
 In the original paper, Dir-VAE(Autoencoded Variational Inference For Topic Mode;AVITM) was proposed for document data.   
 This repository, on the other hand, modifies the network architecture of Dir-VAE so that it can be used for image data.  
 
