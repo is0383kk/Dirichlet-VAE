@@ -1,5 +1,5 @@
 # Dirichlet Variational Auto-Encoder
-Example of Dirichlet-Variational Auto-Encoder (Dir-VAE)  
+Example of Dirichlet-Variational Auto-Encoder (Dir-VAE) by PyTorch  
 Dir-VAE is a VAE which using Dirichlet distribution  
 
 Dir-VAE implemented based on this paper  
