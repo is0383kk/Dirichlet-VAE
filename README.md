@@ -35,8 +35,10 @@ def forward(self, x):
 ```
 
 # Dirichlet Variational Auto-Encoder（日本語）
-本リポジトリはVAEの潜在変数を表現する確率分布にディリクレ分布を使用したディリクレVAEの実装例です  
+本リポジトリはVAEの潜在変数を表現する確率分布にディリクレ分布を使用したディリクレVAEの実装例です．  
+厳密には，ディリクレ分布に従う変数の代わりに，ソフトマックス関数から出力される変数として使用しています．  
 
 以下の論文を参考に実装を行いました  
-"Autoencodeing Variational Inference for Topic Model":https://arxiv.org/pdf/1703.01488  
-元論文ではトピックモデルとして提案されましたが、本リポジトリは画像に対しても使用できるようにしたものです
+[Autoencodeing Variational Inference for Topic Model](https://arxiv.org/pdf/1703.01488)  
+元論文ではトピックモデルとして提案され，Bag of words表現の文書データに適用されました．  
+本リポジトリの実装は，VAEのネットワーク構造を改変し，画像に対して使用できるようにしたものです．
