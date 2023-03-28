@@ -15,8 +15,8 @@ Reconstruction after 10 epochs of training(The top is the original image, the bo
 You need to have pytorch >= v0.4.1 and cuda drivers installed
 
 My environment is the following
-Pytorch==1.5.1
-CUDA==10.1  
+Pytorch >= 1.5.1
+CUDA >= 10.1  
 
 [VAE Implementation Reference](https://github.com/pytorch/examples/blob/main/vae/main.py)  
 
