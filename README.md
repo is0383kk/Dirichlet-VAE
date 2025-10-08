@@ -19,7 +19,8 @@ Reconstruction after 10 epochs of training(The top is the original image, the bo
 ## How to run
 
 Install the required libraries using the following command.  
-※ Install PyTorch first (XXX should match your CUDA version).
+※ Install PyTorch first (XXX should match your CUDA version).  
+※ My environment is the following **Pytorch==2.8.0+cu129, CUDA==12.9**  
 
 ```bash
 $ pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cuXXX
